@@ -66,25 +66,25 @@ Windows 2003以上系统，内存2GB以上，硬盘 50 GB以上。
 
 用户可以通过图形化界面轻松创建新的Petri网模型。首先用户需要点击“文件”->“新建”进入新建界面（如下图所示），然后通过文本框或者下拉菜单输入库所数量和变迁数量，并通过文本框输入关联矩阵以及初始标记。在新建的过程，用户也可以点击“关闭”命令以取消新建。
 
-<img src="E:\C++Project\PetriNetTool\image\图片1.png" alt="图片1" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%871.png" alt="图片1" style="zoom:50%;" />
 
 在输入关联矩阵以及初始标记的过程中，每个数字之间应该以逗号（英文模式下）或者空格分割开。如下图所示。
 
-<img src="E:\C++Project\PetriNetTool\image\图片2.png" alt="图片2" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%872.png" alt="图片2" style="zoom:50%;" />
 
 输入完成后，用户可以点击“确认”命令保存输入的数据，保存文件的格式为文本文件（.txt）。该功能还提供了一种输入保护机制。在Petri网模型中，关联矩阵的行数与库所数量相等，关联矩阵的列数与变迁数量相等，且库所数量和变迁数量都不能为0。如果上述关系有一个被破环，软件就会弹出一个提示框（如下图所示）以提示用户输入不合法。
 
-<img src="E:\C++Project\PetriNetTool\image\图片3.png" alt="图片3" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%873.png" alt="图片3" style="zoom:50%;" />
 
 ### 3.1.2打开
 
 用户也可以通过“文件”->“打开”命令打开之前保存的文件（.txt）或者用户自定义的文件（.txt）。用户自定义的网文件格式应如下图所示，网文件内容因该包括库所数量、变迁数量、关联矩阵以及初始标记。
 
- <img src="E:\C++Project\PetriNetTool\image\图片4.png" alt="图片4" style="zoom:50%;" />
+ <img src="assets/%E5%9B%BE%E7%89%874.png" alt="图片4" style="zoom:50%;" />
 
 一旦文件被选中，该软件将读取文本文件中的内容，并将其解析为库所数量、变迁数量、关联矩阵以及初始标记。解析后，软件将自动加载数据，将库所数量、变迁数量、关联矩阵以及初始标记的信息在界面中显示（如下图），以方便用户查看和编辑。
 
-<img src="E:\C++Project\PetriNetTool\image\图片5.png" alt="图片5" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%875.png" alt="图片5" style="zoom:50%;" />
 
 需要特别说明的是，在分析Petri网模型时，库所的的下标是从1到m（m为库所数量），变迁的下标是从1到n（n为变迁数量）。以下测试数据均采用上图的输入数据。
 
@@ -99,13 +99,13 @@ $$
 J_1=t_1+t_2+t_3+t_4\\
 J_2=t_5+t_6+t_7+t_8
 $$
-<img src="E:\C++Project\PetriNetTool\image\图片6.png" alt="图片6" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%876.png" alt="图片6" style="zoom:50%;" />
 
 ### 3.2.2 P-invariant分析
 
 P-invariant 是 Petri 网的一个属性，当且仅当线性方程组的解可以保持库所标记的总数量不变。在 P-invariant 分析中，该软件会计算并显示所有满足不变性条件的P-invariant。这些 P-invariant 可以帮助用户了解 Petri 网的结构特点，例如系统的稳定性、进程间的资源分配等。一个测试结果如图下图所示。
 
-<img src="E:\C++Project\PetriNetTool\image\图片7.png" alt="图片7" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%877.png" alt="图片7" style="zoom:50%;" />
 
 ## 3.3信标计算
 
@@ -115,25 +115,25 @@ P-invariant 是 Petri 网的一个属性，当且仅当线性方程组的解可�
 
 用户可以点击“信标分析”->“信标”计算Petri网模型的所有信标。如下图所示。
 
-<img src="E:\C++Project\PetriNetTool\image\图片8.png" alt="图片8" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%878.png" alt="图片8" style="zoom:50%;" />
 
 ### 3.3.2极小信标
 
 用户可以点击“信标分析”->“极小信标”计算Petri网模型的所有极小信标（如下图）。
 
-<img src="E:\C++Project\PetriNetTool\image\图片9.png" alt="图片9" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%879.png" alt="图片9" style="zoom:50%;" />
 
 ### 3.3.3严格极小信标
 
 用户可以点击“信标分析”->“严格极小信标”计算Petri网模型的所有严格极小信标。如下图所示。
 
-<img src="E:\C++Project\PetriNetTool\image\图片10.png" alt="图片10" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8710.png" alt="图片10" style="zoom:50%;" />
 
 ### 3.3.4基本信标
 
 用户可以点击“信标分析”->“基本信标”计算Petri网模型的所有基本信标。如下图所示。
 
-<img src="E:\C++Project\PetriNetTool\image\图片11.png" alt="图片11" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8711.png" alt="图片11" style="zoom:50%;" />
 
 ## 3.4状态空间分析
 
@@ -141,19 +141,19 @@ P-invariant 是 Petri 网的一个属性，当且仅当线性方程组的解可�
 
 用户可以点击“状态空间分析”->“可达图计算”计算Petri网模型的所有可达标记。软件以可视化的形式显示出所有的可达标记以及死锁标记（如下图所示）。
 
-<img src="E:\C++Project\PetriNetTool\image\图片12.png" alt="图片12" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8712.png" alt="图片12" style="zoom:50%;" />
 
 ### 3.4.2标识分类
 
 用户可以点击“状态空间分析”->“标记分类”对Petri网模型的所有可达标记分类。标识分类主要是区分出好标记、危险标记、坏标记以及死锁标记（如下图所示）。
 
-<img src="E:\C++Project\PetriNetTool\image\图片13.png" alt="图片13" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8713.png" alt="图片13" style="zoom:50%;" />
 
 ### 3.4.3 MTSI
 
 用户可以点击“状态空间分析”->“标记分类”计算Petri网模型的所有MTSI。软件以可视化的形式显示出MTSI个数以及所有的MTSI（如下图所示。
 
-<img src="E:\C++Project\PetriNetTool\image\图片14.png" alt="图片14" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8714.png" alt="图片14" style="zoom:50%;" />
 
 ## 3.5死锁预防
 
@@ -161,7 +161,7 @@ P-invariant 是 Petri 网的一个属性，当且仅当线性方程组的解可�
 
 用户可以点击“死锁预防”->“基于SMS”对Petri网模型采用基于严格极小信标的死锁预防策略进行死锁预防。软件会显示出受控Petri网模型的关联矩阵以及初始标记（如下图所示），其中关联矩阵的前m行是原始Petri网模型的关联矩阵，第m+1行到最后一行是需要添加的控制库所及其相关的弧；初始标记的前m列是原始Petri网模型的初始标记，第m+1列到最后一列是需要添加的控制库所的初始标记。
 
-<img src="E:\C++Project\PetriNetTool\image\图片15.png" alt="图片15" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8715.png" alt="图片15" style="zoom:50%;" />
 
 ### 3.5.2基于ESMS
 
@@ -169,7 +169,7 @@ P-invariant 是 Petri 网的一个属性，当且仅当线性方程组的解可�
 
 由于采用基本信标预防死锁的方法依赖于原始Petri网模型的初始标记的配置，因此在某些情况下，所输入的Petri网模型可能不适合采用基本信标预防死锁的方法。此时软件会弹出一个提示框（如下图所示），以提醒用户该模型不适合采用基本信标预防死锁。
 
-<img src="E:\C++Project\PetriNetTool\image\图片16.png" alt="图片16" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8716.png" alt="图片16" style="zoom:50%;" />
 
 ## 3.6 TBDP
 
@@ -177,29 +177,29 @@ P-invariant 是 Petri 网的一个属性，当且仅当线性方程组的解可�
 
 用户可以点击“TBDP”->“部分可达图”求出影响时间Petri网模型中死锁的部分可达图(如下图所示)。
 
-<img src="E:\C++Project\PetriNetTool\image\图片17.png" alt="图片17" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8717.png" alt="图片17" style="zoom:50%;" />
 
 ### 3.6.2死锁预防条件
 
 用户可以点击“TBDP”->“死锁预防条件”获取时间Petri网模型中的所有死锁预防条件(如下图所示)，这些死锁预防条件是基于部分可达图获取的。
 
-<img src="E:\C++Project\PetriNetTool\image\图片18.png" alt="图片18" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8718.png" alt="图片18" style="zoom:50%;" />
 
 ### 3.6.2 SRG
 
 用户可以点击“TBDP”->“SRG”计算Petri网模型的符号可达图(如下图所示)。
 
-<img src="E:\C++Project\PetriNetTool\image\图片19.png" alt="图片19" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8719.png" alt="图片19" style="zoom:50%;" />
 
 ## 3.7其他说明
 
 因为结构分析、信标分析等都是在有模型输入的情况下进行的，因此，该软件提供了输入检测机制。如果用户没有输入网模型，软件会弹出一个提示框（如图3.20所示），提醒用户先打开一个文件。
 
-<img src="E:\C++Project\PetriNetTool\image\图片20.png" alt="图片20" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8720.png" alt="图片20" style="zoom:50%;" />
 
 用户可以点击软件右上角的“×”关闭软件，软件会弹出一个提示框（如图3.21所示），再一次跟用户确认是否需要关闭软件。
 
-<img src="E:\C++Project\PetriNetTool\image\图片21.png" alt="图片21" style="zoom:50%;" />
+<img src="assets/%E5%9B%BE%E7%89%8721.png" alt="图片21" style="zoom:50%;" />
 
 # 4 bug
 
