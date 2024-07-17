@@ -4,9 +4,12 @@
 分支说明：
 
 Windows分支下：
+
       存放的是Windows操作系统下的源代码文件
+      
       所使用的软件为Visual Studio 2019、 Qt6.6.0
       
 Linux分支下：
       存放的是Linux操作系统的源代码文件
+      
       所使用的软件为VS code、Ubuntu 18.04，在wsl子系统下完成开发
