@@ -4,6 +4,8 @@
 #include <vector>
 #include <eigen-3.4.0/Eigen/Dense>
 
+#include <MarkingNode.h>
+
 using namespace std;
 using namespace Eigen;
 
