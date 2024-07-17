@@ -1,0 +1,12 @@
+﻿  MyString.cpp
+  PetriNetTool.cpp
+  SymbolicGraph.cpp
+  TBDP.cpp
+  main.cpp
+E:\PNcode\PetriNetTool\TBDP.cpp(335,12): warning C4834: 放弃具有 "nodiscard" 属性的函数的返回值
+  moc_PetriNetTool.cpp
+  LINK : 没有找到 E:\PNcode\PetriNetTool\x64\Debug\PetriNetTool.exe 或上一个增量链接没有生成它；正在执行完全链接
+  PetriNetTool.vcxproj -> E:\PNcode\PetriNetTool\x64\Debug\PetriNetTool.exe
+  Microsoft (R) COFF/PE Editor Version 14.29.30148.0
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  

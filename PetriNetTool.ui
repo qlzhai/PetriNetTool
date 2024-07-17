@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PetriNetToolClass</class>
+ <widget class="QMainWindow" name="PetriNetToolClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PetriNetTool</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="action_openFile"/>
+    <addaction name="action_openFileIOMatrix"/>
+    <addaction name="actionNewFile"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>状态空间分析</string>
+    </property>
+    <addaction name="action_ReachabilityGraph"/>
+    <addaction name="action_markingClass"/>
+    <addaction name="actionMTSI"/>
+   </widget>
+   <widget class="QMenu" name="menuTBDP">
+    <property name="title">
+     <string>TBDP</string>
+    </property>
+    <addaction name="action_partialRG"/>
+    <addaction name="action_DPconditions"/>
+    <addaction name="actionSRG"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>结构特性</string>
+    </property>
+    <addaction name="actionP_invariant"/>
+    <addaction name="actionT_invariant"/>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>信标分析</string>
+    </property>
+    <addaction name="actionSiphons"/>
+    <addaction name="actionMS"/>
+    <addaction name="actionSMS"/>
+    <addaction name="actionESMS"/>
+   </widget>
+   <widget class="QMenu" name="menu_5">
+    <property name="title">
+     <string>死锁预防</string>
+    </property>
+    <addaction name="actionDPBasedSMS"/>
+    <addaction name="actionDPBasedESNS"/>
+    <addaction name="actionDPBasedRegion"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_4"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_5"/>
+   <addaction name="menuTBDP"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_openFile">
+   <property name="text">
+    <string>打开文件(关联矩阵)</string>
+   </property>
+  </action>
+  <action name="action_ReachabilityGraph">
+   <property name="text">
+    <string>可达图</string>
+   </property>
+  </action>
+  <action name="action_markingClass">
+   <property name="text">
+    <string>标识分类</string>
+   </property>
+  </action>
+  <action name="action_partialRG">
+   <property name="text">
+    <string>部分可达图</string>
+   </property>
+  </action>
+  <action name="action_DPconditions">
+   <property name="text">
+    <string>死锁预防条件</string>
+   </property>
+  </action>
+  <action name="actionSRG">
+   <property name="text">
+    <string>SRG</string>
+   </property>
+  </action>
+  <action name="actionP_invariant">
+   <property name="text">
+    <string>P_invariant</string>
+   </property>
+  </action>
+  <action name="actionT_invariant">
+   <property name="text">
+    <string>T_invariant</string>
+   </property>
+  </action>
+  <action name="actionSiphons">
+   <property name="text">
+    <string>信标</string>
+   </property>
+  </action>
+  <action name="actionMS">
+   <property name="text">
+    <string>极小信标</string>
+   </property>
+  </action>
+  <action name="actionSMS">
+   <property name="text">
+    <string>严格极小信标</string>
+   </property>
+  </action>
+  <action name="actionESMS">
+   <property name="text">
+    <string>基本信标</string>
+   </property>
+  </action>
+  <action name="actionDPBasedSMS">
+   <property name="text">
+    <string>基于SMS的死锁预防</string>
+   </property>
+  </action>
+  <action name="actionDPBasedESNS">
+   <property name="text">
+    <string>基于ESMS的死锁预防</string>
+   </property>
+  </action>
+  <action name="actionMTSI">
+   <property name="text">
+    <string>MTSI</string>
+   </property>
+  </action>
+  <action name="actionNewFile">
+   <property name="text">
+    <string>新建文件</string>
+   </property>
+  </action>
+  <action name="action_openFileIOMatrix">
+   <property name="text">
+    <string>打开文件(IOMatrix)</string>
+   </property>
+  </action>
+  <action name="actionDPBasedRegion">
+   <property name="text">
+    <string>基于区域理论的死锁预防</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="PetriNetTool.qrc"/>
+ </resources>
+ <connections/>
+</ui>
