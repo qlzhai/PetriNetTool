@@ -106,40 +106,17 @@ bool ReadFileInfo::initPetriNet(string filename){
     int rows, cols;
     
     ReadFileInfo::getInstance().Getsize(&rows, &cols, filename);
-    std::cout << "Rows: " << rows << ", Cols: " << cols << std::endl;
+    //std::cout << "Rows: " << rows << ", Cols: " << cols << std::endl;
 
     vector<vector<int>> pre(rows,vector<int>(cols, 0)); 
     vector<vector<int>> post(rows,vector<int>(cols, 0));
     vector<int> M(rows, 0);
-    //vector<int> M;
 
     ReadFileInfo::getInstance().LY_pnt2NW(filename, pre, post, M);
 
     PetriNet::getInstance().pre_incidence = post;
     PetriNet::getInstance().post_incidence = pre;
     PetriNet::getInstance().M0_vector = M;
-
-    cout << "M0: " << endl;
-    for(int token : M){
-        cout << token << " ";
-    }
-    cout << endl;
-
-    cout << "Pre: " << endl;
-    for(int i = 0; i < rows; i++){
-        for(int j = 0; j < cols; j++){
-            cout << pre[i][j] << " ";
-        }
-        cout << endl;
-    }
-
-    cout << "Post: " << endl;
-    for(int i = 0; i < rows; i++){
-        for(int j = 0; j < cols; j++){
-            cout << post[i][j] << " ";
-        }
-        cout << endl;
-    }
 
     Eigen::MatrixXi preMatrix(rows, cols);
     Eigen::MatrixXi postMatrix(rows, cols);
@@ -156,6 +133,15 @@ bool ReadFileInfo::initPetriNet(string filename){
     PetriNet::getInstance().post_matrix = postMatrix;
     PetriNet::getInstance().M0_matrix = M0matrix;
 
-    cout << "preMatrix: " << endl;
-    cout << preMatrix << endl;
+    vector<vector<int>> incidence_v(rows,vector<int>(cols, 0));
+    Eigen::MatrixXi incidence_m(rows, cols);
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            incidence_v[i][j] = postMatrix(i, j) - preMatrix(i, j);
+            incidence_m(i, j) = incidence_v[i][j];
+        }
+    }
+
+    PetriNet::getInstance().incidence_vector = incidence_v;
+    PetriNet::getInstance().incidence_matrix = incidence_m;
 }
