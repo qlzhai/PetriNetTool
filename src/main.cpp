@@ -9,5 +9,7 @@ int main()
     ReachableGraph::getInstance().buildReachableGraph();
     vector<MarkingNode> nodes = ReachableGraph::getInstance().getReachableGraphNodes();
     cout << "there are total " << nodes.size() << " markings." << endl;
+
+    system("pause");
     return 0;
 }
