@@ -10,6 +10,7 @@ Windows分支下：
       所使用的软件为Visual Studio 2019、 Qt6.6.0
       
 Linux分支下：
+
       存放的是Linux操作系统的源代码文件
       
       所使用的软件为VS code、Ubuntu 18.04，在wsl子系统下完成开发
