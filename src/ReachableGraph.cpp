@@ -61,6 +61,15 @@ VectorXi ReachableGraph::fireOneTran(VectorXi cur_marking, int t){
     return next_marking;
 }
 
+size_t ReachableGraph::hashVector(VectorXi& vec) {
+    std::hash<int> hasher;
+    size_t hash = 0;
+    for (const int& elem : vec) {
+        hash ^= hasher(elem) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+    }
+    return hash;
+}
+
 bool ReachableGraph::buildReachableGraph(){
     this->v_new_.clear();
     this->v_old_.clear();
@@ -73,6 +82,9 @@ bool ReachableGraph::buildReachableGraph(){
     this->v_old_.emplace(this->VexXiToStr(PetriNet::getInstance().M0_matrix), marking_number);
     this->addNode(marking_number, PetriNet::getInstance().M0_matrix);
 
+    size_t hash_value = this->hashVector(PetriNet::getInstance().M0_matrix);
+    this->hash_table[hash_value] = PetriNet::getInstance().M0_matrix;
+    
     while(!this->v_new_.empty()){
         VectorXi cur_marking = this->v_new_.back();
         this->v_new_.pop_back();
@@ -81,17 +93,32 @@ bool ReachableGraph::buildReachableGraph(){
 
         for(auto& t : enabled_trans){
             VectorXi next_marking = ReachableGraph::fireOneTran(cur_marking, t);
-            int next_index = this->getNodeIndex(next_marking);
+            
+            //计算hash值 判重
+            hash_value = this->hashVector(next_marking);
+            if(hash_table.find(hash_value) == hash_table.end()){
+                this->marking_number++;
+                cout << "marking_number: " << marking_number << endl;
+                v_new_.emplace_back(next_marking);
+                v_old_.emplace(this->VexXiToStr(next_marking), this->marking_number);
+                this->addNode(marking_number, next_marking);
+                hash_table[hash_value] = next_marking; 
+            }
+            nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number));
+
+            //将向量转换成字符串判重
+            /* int next_index = this->getNodeIndex(next_marking);
             if(next_index == -1){
                 this->marking_number++;
-                //cout << "marking_number: " << marking_number << endl;
+                cout << "marking_number: " << marking_number << endl;
                 v_new_.emplace_back(next_marking);
                 v_old_.emplace(this->VexXiToStr(next_marking), this->marking_number);
                 this->addNode(marking_number, next_marking);
             }
-            nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number));
+            nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number)); */
         }
     }
+
     return REACHABILITY_GRAPH_SUCCESS;
 }
 

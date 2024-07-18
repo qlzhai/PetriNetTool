@@ -4,7 +4,7 @@
 
 #include <chrono>
 
-#define INPUT_FILE_NAME "../pnt/r5.pnt"
+#define INPUT_FILE_NAME "../pnt/recipe 8.pnt"
 
 int main()
 {   

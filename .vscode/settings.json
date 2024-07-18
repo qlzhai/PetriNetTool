@@ -59,6 +59,9 @@
         "mutex": "cpp",
         "thread": "cpp",
         "cinttypes": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "hash.h": "c",
+        "myhash.h": "c",
+        "dense": "cpp"
     }
 }
