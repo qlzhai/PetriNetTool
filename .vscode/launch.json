@@ -8,7 +8,7 @@
             "name": "(gdb) 启动",
             "type": "cppdbg",
             "request": "launch",
-            // 更改启动路径，刚才在task.json文件中将执行文件生成在了bin文件目录下
+            // 更改启动路径，刚才在task.json文件中将执行文件生成在了src文件目录下
             "program": "${workspaceFolder}/src/main",
             "args": [],
             "stopAtEntry": false,
