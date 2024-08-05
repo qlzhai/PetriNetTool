@@ -110,41 +110,58 @@ bool ReachableGraph::buildReachableGraph(){
 
 bool ReachableGraph::buildReachableGraphHash(){
     this->v_new_.clear();
-    this->v_old_.clear();
     this->nodes_.clear();
 
     this->marking_number = 0;
 
     // 将初始标记添加到可达图中
     this->v_new_.emplace_back(PetriNet::getInstance().M0_matrix);
-    this->v_old_.emplace(this->VexXiToStr(PetriNet::getInstance().M0_matrix), marking_number);
     this->addNode(marking_number, PetriNet::getInstance().M0_matrix);
 
     size_t hash_value = this->hashVector(PetriNet::getInstance().M0_matrix);
-    this->hash_table[hash_value] = PetriNet::getInstance().M0_matrix;
+    this->hash_table[hash_value] = this->marking_number;
     
     cout << "by hashvalue: " << endl;
     while(!this->v_new_.empty()){
         VectorXi cur_marking = this->v_new_.back();
         this->v_new_.pop_back();
-        int cur_index = this->getNodeIndex(cur_marking);
+        
+        size_t curr_hash_value = this->hashVector(cur_marking);
+        int  cur_index = this->hash_table[curr_hash_value];
         vector<int> enabled_trans = ReachableGraph::freshEnabledTrans(cur_marking);
-
         for(auto& t : enabled_trans){
             VectorXi next_marking = ReachableGraph::fireOneTran(cur_marking, t);
-            
-            //计算hash值 判重
             hash_value = this->hashVector(next_marking);
-            if(hash_table.find(hash_value) == hash_table.end()){
+            if (hash_table.find(hash_value) == hash_table.end())
+            {
                 this->marking_number++;
-                //cout << "marking_number: " << marking_number << endl;
+                // cout << "marking_number: " << marking_number << endl;
                 v_new_.emplace_back(next_marking);
                 v_old_.emplace(this->VexXiToStr(next_marking), this->marking_number);
                 this->addNode(marking_number, next_marking);
-                hash_table[hash_value] = next_marking; 
+                hash_table[hash_value] = this->marking_number;
             }
             nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number));
         }
+
+        // int cur_index = this->getNodeIndex(cur_marking);
+        // vector<int> enabled_trans = ReachableGraph::freshEnabledTrans(cur_marking);
+
+        // for(auto& t : enabled_trans){
+        //     VectorXi next_marking = ReachableGraph::fireOneTran(cur_marking, t);
+            
+        //     //计算hash值 判重
+        //     hash_value = this->hashVector(next_marking);
+        //     if(hash_table.find(hash_value) == hash_table.end()){
+        //         this->marking_number++;
+        //         //cout << "marking_number: " << marking_number << endl;
+        //         v_new_.emplace_back(next_marking);
+        //         v_old_.emplace(this->VexXiToStr(next_marking), this->marking_number);
+        //         this->addNode(marking_number, next_marking);
+        //         hash_table[hash_value] = next_marking; 
+        //     }
+        //     nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number));
+        // }
     }
 
     return REACHABILITY_GRAPH_SUCCESS;
@@ -163,7 +180,7 @@ bool ReachableGraph::buildReachableGraphTrie(){
     this->addNode(marking_number, PetriNet::getInstance().M0_matrix);
     
     Trie tree;
-    tree.search(PetriNet::getInstance().M0_matrix);
+    tree.insert(PetriNet::getInstance().M0_matrix);
 
     cout << "by Trie: " << endl;
     while(!this->v_new_.empty()){
@@ -186,24 +203,51 @@ bool ReachableGraph::buildReachableGraphTrie(){
             }
             nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number));
             tree.isexist = true;
-
-            /*bool flag = tree.search(next_marking);
-            if(flag == false){
-                //不存在
-                this->marking_number++;
-                //cout << "marking_number: " << marking_number << endl;
-                v_new_.emplace_back(next_marking);
-                v_old_.emplace(this->VexXiToStr(next_marking), this->marking_number);
-                this->addNode(marking_number, next_marking);
-                tree.insert(next_marking);
-            }
-            nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number));*/
         }
     }
 
     return REACHABILITY_GRAPH_SUCCESS;
 }
 
+bool ReachableGraph::buildReachableGraphTrie_List(){
+    this->v_new_TrieNodes.clear();
+    this->marking_number = 0;
+    
+    Trie tree;
+    TrieNode* trieNode = tree.insert(PetriNet::getInstance().M0_matrix, 0);
+    this->v_new_TrieNodes.push_back(trieNode);
+
+    cout << "by Trie-List: " << endl;
+    while(!this->v_new_TrieNodes.empty()){
+        TrieNode* curr_trieNode = v_new_TrieNodes.back();
+        this->v_new_TrieNodes.pop_back();
+        vector<int> enabled_trans = ReachableGraph::freshEnabledTrans(curr_trieNode->marking_);
+
+        for(auto& t : enabled_trans){
+            VectorXi next_marking = ReachableGraph::fireOneTran(curr_trieNode->marking_, t);
+            
+            TrieNode* newNode = tree.search(next_marking, 0);
+            if(newNode == nullptr){
+                this->marking_number++;
+                //cout << "marking_number: " << marking_number << endl;
+                newNode = tree.insert(next_marking, 0);
+                this->v_new_TrieNodes.emplace_back(newNode);
+            }
+            //cout << v_new_TrieNodes.size() << endl;
+            curr_trieNode->chileNodes.emplace_back(newNode);
+        }
+    }
+    this->v_new_TrieNodes.clear();
+
+    return REACHABILITY_GRAPH_SUCCESS;
+}
+
 vector<MarkingNode> ReachableGraph::getReachableGraphNodes(){
     return this->nodes_;
+}
+
+int ReachableGraph::getMarkingNumber(){
+    int num = this->marking_number;
+    num++;
+    return num;
 }

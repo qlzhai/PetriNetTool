@@ -3,8 +3,12 @@
 #include "StructuralPro.h"
 
 #include <chrono>
+#include <sys/resource.h>
 
 #define INPUT_FILE_NAME "../pnt/recipe 8.pnt"
+
+//查看程序占用内存大小
+void printMemoryUsage();
 
 int main()
 {
@@ -20,12 +24,15 @@ int main()
     start = std::chrono::high_resolution_clock::now();
     //ReachableGraph::getInstance().buildReachableGraph();
     //ReachableGraph::getInstance().buildReachableGraphHash();
-    ReachableGraph::getInstance().buildReachableGraphTrie();
-    vector<MarkingNode> nodes = ReachableGraph::getInstance().getReachableGraphNodes();
+    //ReachableGraph::getInstance().buildReachableGraphTrie();
+    ReachableGraph::getInstance().buildReachableGraphTrie_List();
+    //vector<MarkingNode> nodes = ReachableGraph::getInstance().getReachableGraphNodes();
+    int num = ReachableGraph::getInstance().getMarkingNumber();
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    cout << "可达图计算完成，一共有 " << nodes.size() << " 个标记." << endl;
+    cout << "可达图计算完成，一共有 " << num << " 个标记." << endl;
     cout << "所用时间 " << duration.count() << " ms." << endl;
+    printMemoryUsage();
     cout << endl;
     cout << endl;
 
@@ -63,4 +70,14 @@ int main()
     }
     system("read -p 'Press Enter to Continue...' var"); // 系统调用
     return 0;
+}
+
+void printMemoryUsage(){
+    struct rusage usage;
+    if(getrusage(RUSAGE_SELF, &usage) == 0){
+        cout << "Memory usage: " << usage.ru_maxrss << "KB" << endl;
+    }
+    else {
+        cerr << "Failed to retrieve memory information." << endl;
+    }
 }
