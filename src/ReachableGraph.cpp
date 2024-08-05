@@ -81,10 +81,49 @@ bool ReachableGraph::buildReachableGraph(){
     this->v_new_.emplace_back(PetriNet::getInstance().M0_matrix);
     this->v_old_.emplace(this->VexXiToStr(PetriNet::getInstance().M0_matrix), marking_number);
     this->addNode(marking_number, PetriNet::getInstance().M0_matrix);
+    
+    cout << "original: " << endl;
+    while(!this->v_new_.empty()){
+        VectorXi cur_marking = this->v_new_.back();
+        this->v_new_.pop_back();
+        int cur_index = this->getNodeIndex(cur_marking);
+        vector<int> enabled_trans = ReachableGraph::freshEnabledTrans(cur_marking);
+
+        for(auto& t : enabled_trans){
+            VectorXi next_marking = ReachableGraph::fireOneTran(cur_marking, t);
+
+            //将向量转换成字符串判重
+            int next_index = this->getNodeIndex(next_marking);
+            if(next_index == -1){
+                this->marking_number++;
+                //cout << "marking_number: " << marking_number << endl;
+                v_new_.emplace_back(next_marking);
+                v_old_.emplace(this->VexXiToStr(next_marking), this->marking_number);
+                this->addNode(marking_number, next_marking);
+            }
+            nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number));
+        }
+    }
+
+    return REACHABILITY_GRAPH_SUCCESS;
+}
+
+bool ReachableGraph::buildReachableGraphHash(){
+    this->v_new_.clear();
+    this->v_old_.clear();
+    this->nodes_.clear();
+
+    this->marking_number = 0;
+
+    // 将初始标记添加到可达图中
+    this->v_new_.emplace_back(PetriNet::getInstance().M0_matrix);
+    this->v_old_.emplace(this->VexXiToStr(PetriNet::getInstance().M0_matrix), marking_number);
+    this->addNode(marking_number, PetriNet::getInstance().M0_matrix);
 
     size_t hash_value = this->hashVector(PetriNet::getInstance().M0_matrix);
     this->hash_table[hash_value] = PetriNet::getInstance().M0_matrix;
     
+    cout << "by hashvalue: " << endl;
     while(!this->v_new_.empty()){
         VectorXi cur_marking = this->v_new_.back();
         this->v_new_.pop_back();
@@ -98,24 +137,67 @@ bool ReachableGraph::buildReachableGraph(){
             hash_value = this->hashVector(next_marking);
             if(hash_table.find(hash_value) == hash_table.end()){
                 this->marking_number++;
-                cout << "marking_number: " << marking_number << endl;
+                //cout << "marking_number: " << marking_number << endl;
                 v_new_.emplace_back(next_marking);
                 v_old_.emplace(this->VexXiToStr(next_marking), this->marking_number);
                 this->addNode(marking_number, next_marking);
                 hash_table[hash_value] = next_marking; 
             }
             nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number));
+        }
+    }
 
-            //将向量转换成字符串判重
-            /* int next_index = this->getNodeIndex(next_marking);
-            if(next_index == -1){
+    return REACHABILITY_GRAPH_SUCCESS;
+}
+
+bool ReachableGraph::buildReachableGraphTrie(){
+    this->v_new_.clear();
+    this->v_old_.clear();
+    this->nodes_.clear();
+
+    this->marking_number = 0;
+
+    // 将初始标记添加到可达图中
+    this->v_new_.emplace_back(PetriNet::getInstance().M0_matrix);
+    this->v_old_.emplace(this->VexXiToStr(PetriNet::getInstance().M0_matrix), marking_number);
+    this->addNode(marking_number, PetriNet::getInstance().M0_matrix);
+    
+    Trie tree;
+    tree.search(PetriNet::getInstance().M0_matrix);
+
+    cout << "by Trie: " << endl;
+    while(!this->v_new_.empty()){
+        VectorXi cur_marking = this->v_new_.back();
+        this->v_new_.pop_back();
+        int cur_index = this->getNodeIndex(cur_marking);
+        vector<int> enabled_trans = ReachableGraph::freshEnabledTrans(cur_marking);
+
+        for(auto& t : enabled_trans){
+            VectorXi next_marking = ReachableGraph::fireOneTran(cur_marking, t);
+
+            tree.insert(next_marking);
+            if(tree.isexist == false){
+                //不存在
                 this->marking_number++;
-                cout << "marking_number: " << marking_number << endl;
+                //cout << "marking_number: " << marking_number << endl;
                 v_new_.emplace_back(next_marking);
                 v_old_.emplace(this->VexXiToStr(next_marking), this->marking_number);
                 this->addNode(marking_number, next_marking);
             }
-            nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number)); */
+            nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number));
+            tree.isexist = true;
+
+            /*bool flag = tree.search(next_marking);
+            if(flag == false){
+                //不存在
+                this->marking_number++;
+                //cout << "marking_number: " << marking_number << endl;
+                v_new_.emplace_back(next_marking);
+                v_old_.emplace(this->VexXiToStr(next_marking), this->marking_number);
+                this->addNode(marking_number, next_marking);
+                tree.insert(next_marking);
+            }
+            nodes_[cur_index].transition_to_son_.emplace_back(make_pair(t, marking_number));*/
         }
     }
 

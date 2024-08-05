@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PetriNet.h"
+#include "Trie.h"
 #include <unordered_map>
 #include <functional>
 
@@ -30,5 +31,7 @@ public:
     static ReachableGraph& getInstance();
 
     bool buildReachableGraph(); // 构建可达图
+    bool buildReachableGraphHash(); // 构建可达图-Hash
+    bool buildReachableGraphTrie(); // 构建可达图-字典树
     vector<MarkingNode> getReachableGraphNodes(); // 外部获取可达图节点
 };

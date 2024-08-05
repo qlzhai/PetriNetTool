@@ -18,7 +18,9 @@ int main()
     // 计算可达图
     cout << "开始计算可达图..." << endl;
     start = std::chrono::high_resolution_clock::now();
-    ReachableGraph::getInstance().buildReachableGraph();
+    //ReachableGraph::getInstance().buildReachableGraph();
+    //ReachableGraph::getInstance().buildReachableGraphHash();
+    ReachableGraph::getInstance().buildReachableGraphTrie();
     vector<MarkingNode> nodes = ReachableGraph::getInstance().getReachableGraphNodes();
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
